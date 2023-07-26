@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/BEM.css">
+    <link rel="stylesheet" href="./assets/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="btn-BEM">
+        <div onclick="showSuccessToast();" class="btn btn--success">DONE</div>
+        <div onclick="showWarningToast();" class="btn btn--warning">WRONG</div>
+        <div onclick="showDangerToast();" class="btn btn--danger">ERROR</div>
+    </div>
+    <!-- 
+    <div class="">
+        <div class="btn btn-size-l btn--success">DONE</div>
+        <div class="btn btn-size-l btn--warning">WRONG</div>
+        <div class="btn btn-size-l btn--danger">ERROR</div>
+    </div>
+    <div class="">
+        <div class="btn btn-size-s btn--success">DONE</div>
+        <div class="btn btn-size-s btn--warning">WRONG</div>
+        <div class="btn btn-size-s btn--danger">ERROR</div>
+    </div> -->
+    <!-- success -->
+    <div id="toast">
+        <!-- <div class="toast toast--success">
+        </div>
+        <div class="toast toast--info">
+            <div class="toast__icon">
+                <i class="fa-solid fa-info"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">Info</h3>
+                <p class="toast__massage">Anyone with access can view your invited visitors </p>
+            </div>
+            <div class="toast__close">
+                <i class="ti-close"></i>
+            </div>
+        </div> -->
+    </div>
+
+    <!-- info -->
+
+    <!-- warning -->
+    <!-- <div class="toast toast--warning">
+        <div class="toast__icon">
+            <i class="fa-solid fa-exclamation"></i>
+        </div>
+        <div class="toast__body">
+            <h3 class="toast__title">Warning</h3>
+            <p class="toast__massage">Anyone with access can view your invited visitors </p>
+        </div>
+        <div class="toast__close">
+            <i class="ti-close"></i>
+        </div>
+    </div> -->
+    <script>
+        function toast({
+            title = '',
+            massage = '',
+            type = 'info',
+            duration = 3000
+        }) {
+            const main = document.getElementById('toast');
+            if (main) {
+                const toast = document.createElement('div');
+                const autoRemovedID = setTimeout(function() {
+                    main.removeChild(toast);
+                }, duration + 1000);
+                toast.onclick = function(e) {
+                    if (e.target.closest('.toast__close')) {
+                        main.removeChild(toast);
+                        clearTimeout(autoRemovedID)
+                    }
+                }
+
+                const icons = {
+                    success: 'fa-solid fa-circle-check',
+                    info: 'fa-solid fa-info',
+                    warning: 'fa-solid fa-exclamation',
+                };
+
+                const delay = (duration / 1000).toFixed(2);
+                const icon = icons[type];
+                toast.classList.add('toast', `toast--${type}`);
+                toast.style.animation = `slideleft ease .4s, fadeout linear 1s ${delay}s forwards`;
+                toast.innerHTML = `
+                
+                    <div class="toast__icon">
+                        <i class="${icon}"></i>
+                    </div>
+                    <div class="toast__body">
+                        <h3 class="toast__title"> ${title} </h3>
+                        <p class="toast__massage"> ${massage} </p>
+                    </div>
+                    <div class="toast__close">
+                        <i class="ti-close"></i>
+                    </div>
+                
+                `;
+                main.appendChild(toast);
+
+            }
+        }
+        toast({
+            title: 'success',
+            massage: 'Anyone with access can view your invited visitors but ',
+            type: 'info',
+            duration: 3000
+        });
+
+        function showSuccessToast() {
+            toast({
+                title: 'success',
+                massage: 'Anyone with access can view your invited visitors but ',
+                type: 'success',
+                duration: 3000
+            });
+        };
+
+        function showWarningToast() {
+            toast({
+                title: 'info',
+                massage: 'Anyone with access can view your invited visitors but ',
+                type: 'info',
+                duration: 3000
+            });
+        };
+
+        function showDangerToast() {
+            toast({
+                title: 'warning',
+                massage: 'Anyone with access can view your invited visitors but ',
+                type: 'warning',
+                duration: 3000
+            });
+        };
+    </script>
+</body>
+
+</html>
